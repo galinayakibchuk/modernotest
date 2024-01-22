@@ -65,7 +65,7 @@ function sprite() {
 }
 
 function scripts() {
-  return src(['app/js/main.js'])
+  return src(['app/js/**/*/.js'])
     .pipe(concat('main.min.js'))
     .pipe(uglify())
     .pipe(dest('app/js'))
@@ -74,7 +74,8 @@ function scripts() {
 
 function styles() {
   return src([
-    'app/scss/style.scss'])
+    'node_modules/normalize.css/normalize.css',
+    'app/scss/**/*.scss'])
     .pipe(autoprefixer({ overrideBrowserslist: ['last 10 version'] }))
     .pipe(concat('style.min.css'))
     .pipe(scss({ outputStyle: 'compressed' }))
@@ -88,9 +89,9 @@ function watching() {
       baseDir: "app/"
     }
   });
-  watch(['app/scss/style.scss'], styles)
+  watch(['app/scss/**/*.scss'], styles)
   watch(['app/images/src'], images)
-  watch(['app/js/main.js'], scripts)
+  watch(['app/js/main.min.js'], scripts)
   watch(['app/components/*', 'app/pages/*'], pages)
   watch(['app/**/*.html']).on('change', browserSync.reload)
 }
